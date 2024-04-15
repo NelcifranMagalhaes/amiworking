@@ -6,11 +6,9 @@ class SimpleForm extends React.Component {
       this.state = {
         dateWork: '',
         workToday: true,
-        message: ''
+        message: ""
       };
-  
       this.handleInputChange = this.handleInputChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
     }
   
     handleInputChange(event) {
@@ -18,7 +16,7 @@ class SimpleForm extends React.Component {
       const value = target.value;
       const name = target.name;
       this.setState({
-        [name]: value
+        [name]: value,
       });
     }
 
@@ -35,38 +33,42 @@ class SimpleForm extends React.Component {
       let dayInputed = this.dateParser(this.state.dateWork)
       let inputedDateisEven = this.isEven(dayInputed)
       let todayDateisEven = this.isEven(new Date().getDate())
+      let message = ''
       if (todayDateisEven && this.state.workToday) {
         if (inputedDateisEven) {
-          this.message = 'vai trabalhar!'
+          message = 'vai trabalhar!'
         } else {
-          this.message = 'não vai trabalhar!'
+          message = 'não vai trabalhar!'
         }
       } else if (todayDateisEven && !this.state.workToday){
         if (inputedDateisEven) {
-          this.message = 'não vai trabalhar!'
+          message = 'não vai trabalhar!'
         } else {
-          this.message = 'vai trabalhar!'
+          message = 'vai trabalhar!'
         }
       } else if (!todayDateisEven && this.state.workToday){
         if (inputedDateisEven) {
-          this.message = 'não vai trabalhar!'
+          message = 'não vai trabalhar!'
         } else {
-          this.message = 'vai trabalhar!'
+          message = 'vai trabalhar!'
         }
       }
       else {
         if (inputedDateisEven) {
-          this.message = 'vai trabalhar!'
+          message = 'vai trabalhar!'
         } else {
-          this.message = 'não vai trabalhar!'
+          message = 'não vai trabalhar!'
         }
       }
-      console.log(this.message)
+      this.setState({
+        message: message
+      });
+      event.preventDefault();
     }
   
     render() {
       return (
-        <form onSubmit={this.handleSubmit} className='max-w-2xl bg-white py-10 px-5 m-auto w-full mt-10'>
+        <form onSubmit={this.handleSubmit.bind(this)} className='max-w-2xl bg-white py-10 px-5 m-auto w-full mt-10'>
 
           <div className="text-3xl mb-6 text-center ">
             Vai trabalhar nessa data?
@@ -102,7 +104,7 @@ class SimpleForm extends React.Component {
               </svg>
               <span className="sr-only">Info</span>
               <div>
-                <span className="font-medium">{this.message}!</span>
+                <span className="font-medium">{this.state.message}!</span>
               </div>
             </div>
             </div>
