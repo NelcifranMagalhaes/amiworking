@@ -10,3 +10,8 @@ This app try to help these people to anticipate when they'll be in day off.
  - fill the date that you want to know if you work 
  - mark 'yes' or 'not'  if you are working today
  - Submit
+
+
+ ## screenshot
+
+ ![logo](public/PtWorking.gif)
