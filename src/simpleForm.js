@@ -6,7 +6,8 @@ class SimpleForm extends React.Component {
       this.state = {
         dateWork: '',
         workToday: true,
-        message: ""
+        message: "",
+        showDiv: false
       };
       this.handleInputChange = this.handleInputChange.bind(this);
     }
@@ -34,34 +35,22 @@ class SimpleForm extends React.Component {
       let inputedDateisEven = this.isEven(dayInputed)
       let todayDateisEven = this.isEven(new Date().getDate())
       let message = ''
-      if (todayDateisEven && this.state.workToday) {
+      if ((todayDateisEven && this.state.workToday) || (!todayDateisEven && !this.state.workToday)) {
         if (inputedDateisEven) {
           message = 'vai trabalhar!'
         } else {
           message = 'não vai trabalhar!'
         }
-      } else if (todayDateisEven && !this.state.workToday){
+      } else {
         if (inputedDateisEven) {
           message = 'não vai trabalhar!'
         } else {
           message = 'vai trabalhar!'
-        }
-      } else if (!todayDateisEven && this.state.workToday){
-        if (inputedDateisEven) {
-          message = 'não vai trabalhar!'
-        } else {
-          message = 'vai trabalhar!'
-        }
-      }
-      else {
-        if (inputedDateisEven) {
-          message = 'vai trabalhar!'
-        } else {
-          message = 'não vai trabalhar!'
         }
       }
       this.setState({
-        message: message
+        message: message,
+        showDiv: true
       });
       event.preventDefault();
     }
@@ -81,7 +70,7 @@ class SimpleForm extends React.Component {
             </div>
 
             <div className="col-span-2">
-              <label className="text-1xl font-medium">Está trabalhando hj?</label>
+              <label className="text-1xl font-medium">Está trabalhando hoje?</label>
               <div className="flex items-center mb-4">
                 <input checked id="default-radio-1" type="radio" value="true" onChange={this.handleInputChange} name="workToday" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                 <label htmlFor="default-radio-1" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sim</label>
@@ -97,17 +86,21 @@ class SimpleForm extends React.Component {
                 Enviar
               </button>
             </div>
+            {
+              this.state.showDiv &&
+
             <div className="col-span-2 text-right">
-            <div className="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                <span className="font-medium">{this.state.message}!</span>
+              <div className="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span className="sr-only">Info</span>
+                <div>
+                  <span className="font-medium">{this.state.message}!</span>
+                </div>
               </div>
             </div>
-            </div>
+            }
           </div>
         </form>
         
