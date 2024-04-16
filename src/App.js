@@ -1,4 +1,4 @@
-import SimpleForm from './simpleForm';
+import SimpleForm from './components/simpleForm';
 
 export default function App() {
 
